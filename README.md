@@ -258,8 +258,7 @@ Contributions are welcome! Please feel free to submit a Pull Request~ (◠‿◠
 Ideas for improvements:
 - [ ] Support for more architectures (ARM, ARM64)
 - [ ] Custom hook configuration options
-- [ ] Multiple tunnel instance management
-- [ ] Web-based management interface
+- [ ] ..etc
 
 ---
 
