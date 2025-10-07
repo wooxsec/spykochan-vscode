@@ -271,7 +271,7 @@ This project is licensed under the MIT License. Use responsibly! ✨
 
 ## 💖 Credits
 
-**Created with love by w00n** 🌸
+**Created with love by woonsenpaii** 🌸
 
 Special thanks to:
 - VSCode Team for the amazing tunnel feature
