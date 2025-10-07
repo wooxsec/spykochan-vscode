@@ -242,6 +242,8 @@ sudo rm -f /usr/lib/vscode.so
 
 ---
 
+## -> ref : https://unit42.paloaltonetworks.com/stately-taurus-abuses-vscode-southeast-asian-espionage/
+
 ## ⚠️ Important Notes
 
 - 🔐 This tool requires **root privileges** to modify system configurations
