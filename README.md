@@ -76,6 +76,7 @@ sudo ./install.sh install
 ![Alt text describing image](img/10.png)
 
 ![Alt text describing image](img/11.png)
+Ctrl + C to exit
 
 The installer will:
 1. 🧪 Test the stealth hook library
